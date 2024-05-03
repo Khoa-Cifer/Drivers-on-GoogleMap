@@ -6,6 +6,7 @@ import { Bar, Doughnut, Line } from "react-chartjs-2";
 import revenueData from "../data/revenueData.json";
 import sourceData from "../data/sourceData.json";
 import { Chart as ChartJS, defaults } from "chart.js/auto";
+import { YAxis } from "recharts";
 
 defaults.maintainAspectRatio = false;
 defaults.responsive = true;
@@ -32,8 +33,9 @@ const Home = () => {
                 <div className="py-4 px-[50px]">
                     <p className="font-bold text-[66px] text-[#263071]">Dashboard</p>
                     <div className="App">
-                        <div className="dataCard revenueCard">
+                        <div className="border p-8 rounded-2xl">
                             <Line
+                                height="300px"
                                 data={{
                                     labels: revenueData.map((data) => data.label),
                                     datasets: [
@@ -52,48 +54,84 @@ const Home = () => {
                                     ],
                                 }}
                                 options={{
-                                    elements: {
-                                        line: {
-                                        },
-                                    },
                                     plugins: {
+                                        legend: {
+                                            position: 'top',
+                                            align: 'end',
+
+                                        },
                                         title: {
-                                            text: "Monthly Revenue & Cost",
+                                            text: "Talents",
+                                            color: "#01428E",
                                         },
                                     },
                                 }}
                             />
                         </div>
+                        <div className="flex gap-6 justify-between mt-6">
+                            <div className="p-6 border">
+                                <Doughnut
+                                    data={{
+                                        labels: sourceData.map((data) => data.label),
+                                        datasets: [
+                                            {
+                                                label: "Count",
+                                                data: sourceData.map((data) => data.value),
+                                                backgroundColor: [
+                                                    "#FF9B04",
+                                                    "#2C6EEE",
+                                                ],
+                                                borderColor: [
+                                                    "#FF9B04",
+                                                    "#2C6EEE",
+                                                ],
+                                            },
+                                        ],
+                                    }}
+                                    options={{
+                                        plugins: {
+                                            legend: {
+                                                position: 'right'
+                                            },
+                                            title: {
+                                                text: "Total Talent",
+                                            },
+                                        },
+                                    }}
+                                />
+                            </div>
 
-                        <div className="dataCard categoryCard">
-                            <Doughnut
-                                data={{
-                                    labels: sourceData.map((data) => data.label),
-                                    datasets: [
-                                        {
-                                            label: "Count",
-                                            data: sourceData.map((data) => data.value),
-                                            backgroundColor: [
-                                                "rgba(43, 63, 229, 0.8)",
-                                                "rgba(250, 192, 19, 0.8)",
-                                                "rgba(253, 135, 135, 0.8)",
-                                            ],
-                                            borderColor: [
-                                                "rgba(43, 63, 229, 0.8)",
-                                                "rgba(250, 192, 19, 0.8)",
-                                                "rgba(253, 135, 135, 0.8)",
-                                            ],
+                            <div className="p-6 border">
+                                <Doughnut
+                                    data={{
+                                        labels: sourceData.map((data) => data.label),
+                                        datasets: [
+                                            {
+                                                label: "Count",
+                                                data: sourceData.map((data) => data.value),
+                                                backgroundColor: [
+                                                    "#FF9B04",
+                                                    "#2C6EEE",
+                                                ],
+                                                borderColor: [
+                                                    "#FF9B04",
+                                                    "#2C6EEE",
+                                                ],
+                                            },
+                                        ],
+                                    }}
+                                    options={{
+                                        plugins: {
+                                            legend: {
+                                                position: 'right'
+                                            },
+                                            title: {
+                                                text: "Fully Onboard",
+                                            },
                                         },
-                                    ],
-                                }}
-                                options={{
-                                    plugins: {
-                                        title: {
-                                            text: "Revenue Sources",
-                                        },
-                                    },
-                                }}
-                            />
+                                    }}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
