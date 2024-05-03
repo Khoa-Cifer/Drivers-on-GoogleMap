@@ -21,7 +21,7 @@ public class Order {
     private Date orderDate;
     private Integer totalPrice;
     private String status;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore
     private User user;
 }

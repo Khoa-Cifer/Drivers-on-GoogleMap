@@ -6,13 +6,15 @@ import com.cifer.app.backend.request.RegistrationRequest;
 import java.util.List;
 
 public interface UserService {
-    List<User> getAllDrivers();
+    public List<User> getAllUsers(); //get all current users
 
-    List<User> getAllCustomers();
-
-    User getDriverByEmail(String email);
-
-    User getCustomerByEmail(String email);
+    public List<User> getAllUsersByRole(String role); //filter all users by their role
 
     User register(RegistrationRequest registrationRequest);
+
+    User getUserByEmail(String email);
+
+    String updateUserByEmail(String email, User newUser);
+
+    String deleteUserByEmail(String email);
 }

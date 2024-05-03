@@ -1,17 +1,19 @@
-import { useJsApiLoader } from "@react-google-maps/api";
-import Map from "./components/Map";
-import { mapOptions } from "./components/MapConfiguration";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Dashboard from "./page/Dashboard";
+import FeaturesAccessing from './layout/FeaturesAccessing';
 
 function App() {
-  const { isLoaded } = useJsApiLoader({
-    id: mapOptions.googleMapApiKey,
-    googleMapsApiKey: mapOptions.googleMapApiKey,
-  });
 
   return (
-    <div className="App">
-      <h1>React Google map api</h1>
-      <Map isLoaded={isLoaded}/>
+    <div className="App bg-[#E6F9FD]">
+      <main className='flex'>
+        <FeaturesAccessing />
+        <Router>
+          <Routes>
+            <Route path='/' element={<Dashboard />}></Route>
+          </Routes>
+        </Router>
+      </main>
     </div>
   );
 }

@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "Roles")
 @Data
@@ -17,7 +20,7 @@ public class Role {
     @Column(name = "role_id")
     private Long id;
     private String name;
-    @OneToOne(mappedBy = "role")
+    @OneToMany(cascade = CascadeType.ALL)
     @JsonIgnore
-    private User user;
+    private Set<User> users = new HashSet<>();
 }

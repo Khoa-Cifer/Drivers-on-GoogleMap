@@ -1,6 +1,8 @@
 package com.cifer.app.backend.service;
 
+import com.cifer.app.backend.exception.RoleNotFoundException;
 import com.cifer.app.backend.exception.UserAlreadyExistException;
+import com.cifer.app.backend.exception.UserNotFoundException;
 import com.cifer.app.backend.model.Role;
 import com.cifer.app.backend.model.User;
 import com.cifer.app.backend.repository.RoleRepository;
@@ -18,23 +20,14 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
 
     @Override
-    public List<User> getAllDrivers() {
-        return List.of();
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     @Override
-    public List<User> getAllCustomers() {
-        return List.of();
-    }
+    public List<User> getAllUsersByRole(String role) {
 
-    @Override
-    public User getDriverByEmail(String email) {
-        return null;
-    }
-
-    @Override
-    public User getCustomerByEmail(String email) {
-        return null;
+        return userRepository.findAllByRole(role);
     }
 
     @Override
@@ -47,8 +40,48 @@ public class UserServiceImpl implements UserService {
         user.setLastName(registrationRequest.getLastName());
         user.setEmail(registrationRequest.getEmail());
         user.setPassword(registrationRequest.getPassword());
-        Role userRole = roleRepository.findByName("ROLE_CUSTOMER").get();
+        Role userRole = roleRepository.findByName(registrationRequest.getRole()).get();
         user.setRole(userRole);
         return userRepository.save(user);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        if (!userRepository.existsByEmail(email)) {
+            throw new UserNotFoundException("User with email address " + email + " not found !!!");
+        }
+        User user = userRepository.findByEmail(email).get();
+        return user;
+    }
+
+    @Override
+    public String updateUserByEmail(String email, User newUser) {
+        if (!userRepository.existsByEmail(email)) {
+            throw new UserNotFoundException("User with email address " + email + " not found !!!");
+        }
+        User user = userRepository.findByEmail(email).get();
+        if (newUser.getFirstName() != null) {
+            user.setFirstName(newUser.getFirstName());
+        }
+        if (newUser.getLastName() != null) {
+            user.setLastName(newUser.getLastName());
+        }
+        if (newUser.getPhoneNumber() != null) {
+            user.setPhoneNumber(newUser.getPhoneNumber());
+        }
+        if (newUser.getData() != null) {
+            user.setData(newUser.getData());
+        }
+        userRepository.save(user);
+        return "User update successfully";
+    }
+
+    @Override
+    public String deleteUserByEmail(String email) {
+        if (!userRepository.existsByEmail(email)) {
+            throw new UserNotFoundException("User with email address " + email + " not found !!!");
+        }
+        userRepository.deleteByEmail(email);
+        return "Delete user successfully";
     }
 }
