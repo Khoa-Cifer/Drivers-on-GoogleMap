@@ -1,5 +1,6 @@
 package com.cifer.app.backend.service;
 
+import com.cifer.app.backend.model.Image;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -7,13 +8,13 @@ import java.util.List;
 
 public interface ImageService {
 
-    public String uploadImageToFileSystem(MultipartFile file) throws IOException;
+    Image uploadImageToFileSystem(MultipartFile file) throws IOException;
 
-    public byte[] getImageFromFileSystem(Long id) throws IOException;
+    byte[] getImageFromFileSystem(Long id) throws IOException;
 
-    public String updateImageInFileSystem(String fileName, MultipartFile file) throws IOException;
+    Image updateImageInFileSystem(String fileName, MultipartFile file) throws IOException;
 
-    public int getTotalImageInFileSystem();
+    int getTotalImageInFileSystem();
 
-    public List<String> getDuplicatedImageInFileSystem();
+    List<String> getDuplicatedImageInFileSystem();
 }

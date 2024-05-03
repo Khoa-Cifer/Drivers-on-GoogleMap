@@ -21,7 +21,7 @@ public class ImageServiceImpl implements ImageService {
     private final String FOLDER_PATH = "I/FullStackApplicationPractice/Drivers-on-GoogleMap/data/";
 
     @Override
-    public String uploadImageToFileSystem(MultipartFile file) throws IOException {
+    public Image uploadImageToFileSystem(MultipartFile file) throws IOException {
         String filePath = FOLDER_PATH + file.getOriginalFilename();
         Date currentDate = new Date();
         Image fileData = new Image();
@@ -38,8 +38,6 @@ public class ImageServiceImpl implements ImageService {
         fileData.setFilePath(filePath);
         fileData.setVersionCopy(versionCopy);
 
-        imageRepository.save(fileData);
-
         if (fileData.getVersionCopy() == 0) {
             file.transferTo(new File(FOLDER_PATH + file.getOriginalFilename()));
         } else {
@@ -50,10 +48,8 @@ public class ImageServiceImpl implements ImageService {
                     file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'))));
         }
 
-        if (fileData != null) {
-            return "file uploaded successfully : " + filePath;
-        }
-        return null;    }
+        return imageRepository.save(fileData);
+    }
 
     @Override
     public byte[] getImageFromFileSystem(Long id) throws IOException {
@@ -63,7 +59,7 @@ public class ImageServiceImpl implements ImageService {
         return images;    }
 
     @Override
-    public String updateImageInFileSystem(String fileName, MultipartFile file) throws IOException {
+    public Image updateImageInFileSystem(String fileName, MultipartFile file) throws IOException {
         Optional<Image> fileData = imageRepository.findByName(fileName);
         String filePath = FOLDER_PATH + file.getOriginalFilename();
 
@@ -73,12 +69,9 @@ public class ImageServiceImpl implements ImageService {
         imageData.setFilePath(filePath);
 
         file.transferTo(new File(FOLDER_PATH + imageData.getId() + "_" + file.getOriginalFilename()));
-        imageRepository.save(imageData);
 
-        if (imageData != null) {
-            return "file modified successfully : " + filePath;
-        }
-        return null;    }
+        return imageRepository.save(imageData);
+    }
 
     @Override
     public int getTotalImageInFileSystem() {

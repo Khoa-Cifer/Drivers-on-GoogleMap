@@ -6,22 +6,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Entity
-@Table(name = "Orders")
+@Table(name = "Roles")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
+    @Column(name = "role_id")
     private Long id;
-    private Date orderDate;
-    private Integer totalPrice;
-    private String status;
-    @ManyToOne(fetch = FetchType.LAZY)
+    private String name;
+    @OneToOne(mappedBy = "role")
     @JsonIgnore
     private User user;
 }
