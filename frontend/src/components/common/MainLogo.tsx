@@ -1,4 +1,4 @@
-import Logo from "../assets/RecoveredHealth_logo.png"
+import Logo from "../../assets/RecoveredHealth_logo.png"
 
 const MainLogo = () => {
     return (

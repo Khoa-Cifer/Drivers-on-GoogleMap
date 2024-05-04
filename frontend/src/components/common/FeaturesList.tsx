@@ -1,5 +1,5 @@
 import { RiHome3Line } from "react-icons/ri";
-import ModulesList from "../components/ModulesList";
+import ModulesList from "./ModulesList";
 import { FaList, FaQuestionCircle, FaRegBuilding, FaRegUserCircle } from "react-icons/fa";
 import { RiHandbagLine } from "react-icons/ri";
 import { CiHospital1, CiMail } from "react-icons/ci";
@@ -13,16 +13,16 @@ import { PiQuotes } from "react-icons/pi";
 const FeaturesList = () => {
     return (
         <div>
-            <div className="flex items-center rad rounded-2xl bg-[#C3F4FD] p-4 gap-3">
-                <RiHome3Line />
-                <p>Dashboard</p>
+            <div className="flex items-center rounded-2xl bg-[#C3F4FD] p-[16px] gap-3">
+                <RiHome3Line color="#01428E"/>
+                <p className="m-0 text-[#01428E] font-medium">Dashboard</p>
             </div>
             <div className="my-14">
                 <div>
                     <p className="text-[#01428E] text-sm">ADMIN USERS</p>
-                    <div className="flex items-center rad rounded-2xl p-4 gap-3">
-                        <FaRegUserCircle />
-                        <p>Admin Users</p>
+                    <div className="flex items-center rounded-2xl p-[16px] gap-3">
+                        <FaRegUserCircle/>
+                        <p className="m-0 font-medium">Admin Users</p>
                     </div>
                 </div>
             </div>

@@ -1,16 +1,20 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Dashboard from "./page/Dashboard";
-import FeaturesAccessing from './layout/FeaturesAccessing';
+import Dashboard from "./components/page/Dashboard";
+import Taskbar from './components/layout/Taskbar';
+import DeliveryList from './components/page/DeliveryList';
+import OnFleetDrivers from './components/page/OnFleetDrivers';
 
 function App() {
 
   return (
     <div className="App bg-[#E6F9FD]">
       <main className='flex'>
-        <FeaturesAccessing />
+        <Taskbar />
         <Router>
           <Routes>
             <Route path='/' element={<Dashboard />}></Route>
+            <Route path='/deliveries' element={<DeliveryList />}></Route>
+            <Route path='/on-fleet-drivers' element={<OnFleetDrivers />}></Route>
           </Routes>
         </Router>
       </main>

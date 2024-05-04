@@ -1,5 +1,6 @@
 package com.cifer.app.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,15 +24,14 @@ public class User {
     private String email;
     private String phoneNumber;
     private String password;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "image_id")
     private Image data;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id")
     private Location location;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Order> orders = new HashSet<>();
 }

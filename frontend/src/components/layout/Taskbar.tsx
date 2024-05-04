@@ -1,7 +1,7 @@
 import FeaturesList from "../common/FeaturesList"
 import MainLogo from "../common/MainLogo"
 
-const FeaturesAccessing = () => {
+const Taskbar = () => {
     return (
         <div className="w-1/5 max-w-[width: 20%]">
             <div className="px-6 py-[50px]" >
@@ -13,4 +13,4 @@ const FeaturesAccessing = () => {
     )
 }
 
-export default FeaturesAccessing
+export default Taskbar

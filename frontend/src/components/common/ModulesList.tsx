@@ -3,9 +3,9 @@ import { IoIosArrowForward } from "react-icons/io"
 const ModulesList = ({ image, name, hidden }) => {
     return (
         <div className="flex justify-between items-center">
-            <div className="flex items-center rad rounded-2xl p-4 gap-3">
+            <div className="flex items-center rounded-2xl p-[16px] gap-3">
                 {image}
-                <p className="">{name}</p>
+                <p className="m-0 font-medium">{name}</p>
             </div>
             {hidden ? <></> : <IoIosArrowForward />}
         </div>
