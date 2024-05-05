@@ -2,7 +2,6 @@ package com.cifer.app.backend.service;
 
 import com.cifer.app.backend.exception.ProductAlreadyExistException;
 import com.cifer.app.backend.exception.ProductDoNotExistException;
-import com.cifer.app.backend.exception.UserAlreadyExistException;
 import com.cifer.app.backend.model.Product;
 import com.cifer.app.backend.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;

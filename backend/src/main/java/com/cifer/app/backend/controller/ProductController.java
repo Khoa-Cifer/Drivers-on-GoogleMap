@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
     private final ProductService productService;
 
-    @PostMapping("/create")
+    @PostMapping("/create-product")
     public ResponseEntity<String> createNewProduct(@RequestParam("name") String name,
                                                    @RequestParam("quantity") Integer quantity) {
         Product product = new Product();
