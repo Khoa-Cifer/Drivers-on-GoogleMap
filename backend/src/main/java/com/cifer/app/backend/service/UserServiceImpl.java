@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(registrationRequest.getEmail());
         user.setPassword(registrationRequest.getPassword());
         Role userRole = roleRepository.findByName(registrationRequest.getRole()).get();
-        //user.setRoles(userRole);
+        user.setRole(userRole);
         return userRepository.save(user);
     }
 
@@ -56,23 +57,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String updateUserByEmail(String email, User newUser) {
-        if (!userRepository.existsByEmail(email)) {
-            throw new UserNotFoundException("User with email address " + email + " not found !!!");
+        if (userRepository.existsByEmail(email)) {
+            throw new UserAlreadyExistException("User with email address " + email + " already exist");
         }
-        User user = userRepository.findByEmail(email).get();
+        Optional<User> user = Optional.ofNullable(userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User with email address " + email + " not found !!!")));
         if (newUser.getFirstName() != null) {
-            user.setFirstName(newUser.getFirstName());
+            user.get().setFirstName(newUser.getFirstName());
         }
         if (newUser.getLastName() != null) {
-            user.setLastName(newUser.getLastName());
+            user.get().setLastName(newUser.getLastName());
         }
         if (newUser.getPhoneNumber() != null) {
-            user.setPhoneNumber(newUser.getPhoneNumber());
+            user.get().setPhoneNumber(newUser.getPhoneNumber());
         }
         if (newUser.getData() != null) {
-            user.setData(newUser.getData());
+            user.get().setData(newUser.getData());
         }
-        userRepository.save(user);
+        userRepository.save(user.get());
         return "User update successfully";
     }
 

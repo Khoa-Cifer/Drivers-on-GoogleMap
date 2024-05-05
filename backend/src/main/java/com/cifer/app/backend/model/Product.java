@@ -19,5 +19,5 @@ public class Product {
     @Column(name = "product_id")
     private Long id;
     private String name;
-    private Integer quantity;
+    private Integer quantity = 0; //default quantity = 0
 }

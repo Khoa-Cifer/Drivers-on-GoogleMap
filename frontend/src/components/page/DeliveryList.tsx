@@ -2,7 +2,6 @@ import { FaRegBell } from "react-icons/fa6";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { RiHome2Line } from "react-icons/ri";
 import DoughnutChart from "../common/DoughnutChart";
-import StatusCard from "../common/StatusCard";
 import userImage from "../../assets/user.png"
 import { IoIosArrowForward } from "react-icons/io";
 import DeliveryInfoCard from "../common/DeliveryInfoCard";

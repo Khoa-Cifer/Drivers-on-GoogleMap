@@ -12,7 +12,7 @@ public class LocationServiceImpl implements LocationService{
     }
 
     @Override
-    public String updateLocation(Location currentLocation, Location newLocation) {
+    public String updateLocationByUserEmail(String email, Location newLocation) {
         return "";
     }
 

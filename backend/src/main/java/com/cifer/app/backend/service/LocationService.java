@@ -8,7 +8,7 @@ import java.util.List;
 public interface LocationService {
     String createLocation(Location location); //create location when a driver is active or user order a service.
 
-    String updateLocation(Location currentLocation, Location newLocation); //update driver or user's location
+    String updateLocationByUserEmail(String email, Location newLocation); //update driver or user's location
 
     String deleteLocation(String status); //delete location after service complete
 
