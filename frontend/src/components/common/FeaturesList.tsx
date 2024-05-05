@@ -9,19 +9,20 @@ import { MdManageHistory } from "react-icons/md";
 import { IoLayersOutline } from "react-icons/io5";
 import { LiaFileVideoSolid } from "react-icons/lia";
 import { PiQuotes } from "react-icons/pi";
+import { Link } from "react-router-dom";
 
 const FeaturesList = () => {
     return (
         <div>
-            <div className="flex items-center rounded-2xl bg-[#C3F4FD] p-[16px] gap-3">
-                <RiHome3Line color="#01428E"/>
+            <Link to={"/"} className="flex items-center rounded-2xl bg-[#C3F4FD] p-[16px] gap-3">
+                <RiHome3Line color="#01428E" />
                 <p className="m-0 text-[#01428E] font-medium">Dashboard</p>
-            </div>
+            </Link>
             <div className="my-14">
                 <div>
                     <p className="text-[#01428E] text-sm">ADMIN USERS</p>
                     <div className="flex items-center rounded-2xl p-[16px] gap-3">
-                        <FaRegUserCircle/>
+                        <FaRegUserCircle />
                         <p className="m-0 font-medium">Admin Users</p>
                     </div>
                 </div>
@@ -29,10 +30,15 @@ const FeaturesList = () => {
             <div>
                 <div>
                     <p className="text-[#01428E] text-sm">MODULES</p>
-                    <ModulesList image={<RiHandbagLine />} name={"Jobs"} hidden={false} />
+                    <Link to={"/on-fleet-drivers"}>
+                        <ModulesList image={<RiHandbagLine />} name={"Jobs"} hidden={false} />
+                    </Link>
                     <ModulesList image={<CiMail />} name={"Invoices"} hidden={false} />
                     <ModulesList image={<FaRegBuilding />} name={"Companies"} hidden={false} />
+                    <Link to={"/delivery-logs"}>
                     <ModulesList image={<TbWallpaper />} name={"Transaction Logs"} hidden={false} />
+
+                    </Link>
                     <ModulesList image={<LuUserSquare2 />} name={"User Profiles"} hidden={false} />
                     <ModulesList image={<FaList />} name={"C.M.S"} hidden={false} />
                     <ModulesList image={<MdManageHistory />} name={"Manage Blogs"} hidden={false} />

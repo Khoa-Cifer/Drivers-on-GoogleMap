@@ -1,12 +1,28 @@
 import { FaRegBell } from "react-icons/fa6";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { RiHome2Line } from "react-icons/ri";
-import DoughnutChart from "../common/DoughnutChart";
 import userImage from "../../assets/user.png"
 import { IoIosArrowForward } from "react-icons/io";
 import DeliveryInfoCard from "../common/DeliveryInfoCard";
+import { useEffect, useState } from "react";
+import { getAllLogs } from "../config/ApiService";
+import { Table } from "react-bootstrap";
 
 const DeliveryList = () => {
+    const [logsInfo, setLogsInfo] = useState([]);
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState("")
+
+    useEffect(() => {
+        setTimeout(() => {
+            getAllLogs().then((data) => {
+                setLogsInfo(data);
+            }).catch((error) => {
+                setError(error.message);
+            });
+        }, 1000);
+    }, [])
+
     return (
         <div className="flex">
             <div className="w-[75vw] m-[50px] rounded-3xl bg-white">
@@ -35,15 +51,51 @@ const DeliveryList = () => {
                         </button>
                     </div>
                     <div className="grid grid-cols-3 gap-8 my-6">
-                        <DeliveryInfoCard cardHeader={"Header"} cardData={"Text"} cardType={"Text"} bgColor={"#D3E2FF"} />
-                        <DeliveryInfoCard cardHeader={"Header"} cardData={"Text"} cardType={"Text"} bgColor={"#DFFFCF"} />
-                        <DeliveryInfoCard cardHeader={"Header"} cardData={"Text"} cardType={"Text"} bgColor={"#FDCDB8"} />
+                        <DeliveryInfoCard cardHeader={"Header"} cardData={"Text"} cardType={"Text"} bgColor={"bg-[#D3E2FF]"} />
+                        <DeliveryInfoCard cardHeader={"Header"} cardData={"Text"} cardType={"Text"} bgColor={"bg-[#DFFFCF]"} />
+                        <DeliveryInfoCard cardHeader={"Header"} cardData={"Text"} cardType={"Text"} bgColor={"bg-[#FDCDB8]"} />
                     </div>
-                    <div>
-                        <div className="flex gap-6 justify-between mt-6">
-                            <DoughnutChart />
-                            <DoughnutChart />
-                        </div>
+                    <div className="flex border rounded-t-2xl">
+                        <Table striped bordered hover className="table w-1/3 rounded-tl-2xl">
+                            <thead className="bg-[#01428E]">
+                                <th className="py-4 text-[#FFFFFF]">Pharmacy</th>
+                                <th className="py-4 text-[#FFFFFF]">Days Operated</th>
+                                <th className="py-4 text-[#FFFFFF]">Completed</th>
+                            </thead>
+
+                            <tbody className="text-center">
+                                {logsInfo.map((log) => (
+                                    <tr key={log.id}>
+                                        <td className="py-4 text-start pl-3">{log.product.name}</td>
+                                        <td className="py-4">{`${log.product.createdDate[0]}-
+                                                                ${log.product.createdDate[1]}-
+                                                                ${log.product.createdDate[2]}`}
+                                        </td>
+                                        <td className="py-4"></td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                        <Table className="table w-2/3 bg-[#E6E6E6]">
+                            <thead>
+                                <th className="py-4 text-[#01428E]">Drives</th>
+                                <th className="py-4 text-[#01428E]">Elapsed Time (hrs)</th>
+                                <th className="py-4 text-[#01428E]">Drops</th>
+                                <th className="py-4 text-[#01428E]">Miles Traveled</th>
+                                <th className="py-4 text-[#01428E]">Falled</th>
+                            </thead>
+                            <tbody className="text-center">
+                                {logsInfo.map((log) => (
+                                    <tr key={log.id}>
+                                        <td className="py-4">{`${log.driver.firstName} 
+                                                                ${log.driver.lastName}`}</td>
+                                        <td className="py-4"></td>
+                                        <td className="py-4"></td>
+
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
                     </div>
                 </div>
             </div>

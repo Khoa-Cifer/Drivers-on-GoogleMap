@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -17,19 +18,17 @@ public class Log {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "log_id")
     private Long id;
-    private Date orderDate;
-    private Date receiveDate = null;
+    private LocalDate orderDate;
+    private LocalDate receiveDate = null;
     private String status;
     private Integer deliveredQuantity;
     private Integer succeededDeliveredQuantity = deliveredQuantity;
     private boolean isFailed = false;
 
-    public Log(Date orderDate, Integer deliveredQuantity, User order, User driver, Product product) {
-        this.orderDate = orderDate;
+    public Log(Integer deliveredQuantity, User order, User driver) {
         this.deliveredQuantity = deliveredQuantity;
         this.order = order;
         this.driver = driver;
-        this.product = product;
     }
 
     @ManyToOne

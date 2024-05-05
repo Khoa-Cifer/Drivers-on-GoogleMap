@@ -9,11 +9,11 @@ function App() {
   return (
     <div className="App bg-[#E6F9FD]">
       <main className='flex'>
-        <Taskbar />
         <Router>
+          <Taskbar />
           <Routes>
             <Route path='/' element={<Dashboard />}></Route>
-            <Route path='/deliveries' element={<DeliveryList />}></Route>
+            <Route path='/delivery-logs' element={<DeliveryList />}></Route>
             <Route path='/on-fleet-drivers' element={<OnFleetDrivers />}></Route>
           </Routes>
         </Router>

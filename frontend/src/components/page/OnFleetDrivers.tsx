@@ -45,17 +45,17 @@ const OnFleetDrivers = () => {
                             <div className="w-1/2">
                                 <p className="font-semibold text-xs">Drivers</p>
                                 <div className="flex gap-12">
-                                    <MapMarker icon={<GoDotFill />} iconColor={"#80CC39"} title={"Idle"} />
-                                    <MapMarker icon={<GoDotFill />} iconColor={"#3A9BD5"} title={"In transit"} />
+                                    <MapMarker icon={<GoDotFill />} iconColor={"text-[#80CC39]"} title={"Idle"} />
+                                    <MapMarker icon={<GoDotFill />} iconColor={"text-[#3A9BD5]"} title={"In transit"} />
                                 </div>
                             </div>
                             <div className="w-1/2">
                                 <p className="font-semibold text-xs">Tasks</p>
                                 <div className="flex gap-12">
-                                    <MapMarker icon={<FaMapMarker />} iconColor={"#80CC39"} title={"Succeeded"} />
-                                    <MapMarker icon={<FaMapMarker />} iconColor={"#FF0B0B"} title={"Failed"} />
-                                    <MapMarker icon={<FaMapMarker />} iconColor={"#3A9BD5"} title={"In transit"} />
-                                    <MapMarker icon={<FaMapMarker />} iconColor={"#8D5CE9"} title={"Assigned"} />
+                                    <MapMarker icon={<FaMapMarker />} iconColor={"text-[#80CC39]"} title={"Succeeded"} />
+                                    <MapMarker icon={<FaMapMarker />} iconColor={"text-[#FF0B0B]"} title={"Failed"} />
+                                    <MapMarker icon={<FaMapMarker />} iconColor={"text-[#3A9BD5]"} title={"In transit"} />
+                                    <MapMarker icon={<FaMapMarker />} iconColor={"text-[#8D5CE9]"} title={"Assigned"} />
                                 </div>
                             </div>
                         </div>

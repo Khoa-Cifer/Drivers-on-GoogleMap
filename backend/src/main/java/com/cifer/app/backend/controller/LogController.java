@@ -10,7 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/log")
@@ -28,11 +30,15 @@ public class LogController {
                                                @RequestParam("productName") String productName) {
         User customer = userService.getUserByEmail(customerEmail);
         User driver = userService.getUserByEmail(driverEmail);
-        Product product = productService.getProductByName(productName);
 
-        Date orderDate = new Date();
-        Log newLog = new Log(orderDate, deliveredQuantity, customer, driver, product);
-        String successNewLogCreating = logService.createLog(newLog);
+        Log newLog = new Log(deliveredQuantity, customer, driver);
+        String successNewLogCreating = logService.createLog(newLog, productName);
         return ResponseEntity.ok(successNewLogCreating);
+    }
+
+    @GetMapping("/all-logs")
+    public ResponseEntity<List<Log>> getAllLogs() {
+        List<Log> logList = logService.getAllLogs();
+        return ResponseEntity.ok(logList);
     }
 }

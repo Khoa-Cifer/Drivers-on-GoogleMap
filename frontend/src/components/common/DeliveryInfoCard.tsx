@@ -2,7 +2,7 @@ import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 const DeliveryInfoCard = ({ cardHeader, cardData, cardType, bgColor }) => {
     return (
-        <div className={`rounded-2xl p-6 h-40 flex flex-col justify-between bg-[${bgColor}]`}>
+        <div className={`rounded-2xl p-6 h-40 flex flex-col justify-between ${bgColor}`}>
             <div>
                 <div className="flex justify-between">
                     <p className="h-2">{cardHeader}</p>

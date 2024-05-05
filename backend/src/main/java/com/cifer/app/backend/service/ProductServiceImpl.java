@@ -7,6 +7,7 @@ import com.cifer.app.backend.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,10 @@ public class ProductServiceImpl implements ProductService {
         if (productRepository.existsByName(newProduct.getName())) {
             throw new ProductAlreadyExistException(newProduct.getName() + " already exists, cannot be created");
         }
+
+        LocalDate createdDate = LocalDate.now();
+        newProduct.setCreatedDate(createdDate);
+
         productRepository.save(newProduct);
         return "Product created successfully";
     }

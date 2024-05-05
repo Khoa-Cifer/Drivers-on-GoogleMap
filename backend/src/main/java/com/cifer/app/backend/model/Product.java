@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,4 +21,5 @@ public class Product {
     private Long id;
     private String name;
     private Integer quantity = 0; //default quantity = 0
+    private LocalDate createdDate;
 }

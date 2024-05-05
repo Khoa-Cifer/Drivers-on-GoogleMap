@@ -9,6 +9,7 @@ import com.cifer.app.backend.repository.RoleRepository;
 import com.cifer.app.backend.repository.UserRepository;
 import com.cifer.app.backend.request.RegistrationRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getAllUsers() {
@@ -39,7 +41,8 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(registrationRequest.getFirstName());
         user.setLastName(registrationRequest.getLastName());
         user.setEmail(registrationRequest.getEmail());
-        user.setPassword(registrationRequest.getPassword());
+        String password = registrationRequest.getPassword();
+        user.setPassword(passwordEncoder.encode(password));
         Role userRole = roleRepository.findByName(registrationRequest.getRole()).get();
         user.setRole(userRole);
         return userRepository.save(user);
