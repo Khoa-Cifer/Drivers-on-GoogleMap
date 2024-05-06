@@ -1,5 +1,5 @@
-import { useState } from "react";
 import GoogleAPIKey from "../../data/GoogleAPIKey.json";
+import addressData from "../../data/addressData.json"
 
 import {
     APIProvider,
@@ -10,29 +10,24 @@ import {
     Pin,
 }
     from "@vis.gl/react-google-maps"
-import { FaMapMarker } from "react-icons/fa";
 import Directions from "./Directions";
+import { useState } from "react";
 
 const GoogleMap = () => {
-    const position = { lat: 53.54, lng: 10 };
-    const [open, setOpen] = useState(false);
+    const [origin, setOrigin] = useState([{
+        lat: 0,
+        lng: 0,
+    }]);
 
-    const window = (e) => {
-        setOpen(e);
-    }
+    const [destination, setDestination] = useState([{
+        lat: 0,
+        lng: 0,
+    }]);
 
     return (
         <APIProvider apiKey={GoogleAPIKey.REACT_APP_GOOGLE_MAPS_API_KEY}>
             <div style={{ height: "70vh", width: "100%" }}>
                 <Map mapId={GoogleAPIKey.REACT_APP_GOOGLE_MAPS_ID}>
-                    <AdvancedMarker onClick={e => window(e)} position={(position)}>
-                        <FaMapMarker style={{ color: 'red', fontSize: '32px' }} />
-                    </AdvancedMarker>
-                    {open && (
-                        <InfoWindow position={position} onCloseClick={() => setOpen(false)}>
-                            <p>This is the mark</p>
-                        </InfoWindow>
-                    )}
                     <Directions />
                 </Map>
             </div>

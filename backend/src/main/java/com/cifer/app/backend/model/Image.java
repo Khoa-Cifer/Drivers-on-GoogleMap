@@ -24,6 +24,5 @@ public class Image {
     private String filePath;
     private int versionCopy = 0;
     @OneToOne(mappedBy = "data")
-    @JsonIgnore
     private User user;
 }

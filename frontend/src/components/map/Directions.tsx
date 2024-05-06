@@ -1,7 +1,8 @@
-import { useMap, useMapsLibrary } from "@vis.gl/react-google-maps";
+import { InfoWindow, useMap, useMapsLibrary } from "@vis.gl/react-google-maps";
 import { useEffect, useState } from "react";
+import addressData from "../../data/addressData.json"
 
-const Directions = () => {
+const Directions = ({ origin, destination }) => {
     const map = useMap();
     const routesLibrary = useMapsLibrary("routes");
     const [directionsService, setDirectionsService] = useState<google.maps.DirectionsService>();
@@ -10,6 +11,7 @@ const Directions = () => {
     const [routeIndex, setRouteIndex] = useState(0);
     const selected = routes[routeIndex];
     const leg = selected?.legs[0];
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         if (!routesLibrary || !map) {
@@ -24,8 +26,8 @@ const Directions = () => {
             return;
         }
         directionsService.route({
-            origin: "100 Front St, Toronto ON",
-            destination: "500 College St, Toronto ON",
+            origin: { lat: addressData[0].lat, lng: addressData[0].lng }, // Latitude and longitude for 100 Front St, Toronto ON
+            destination: { lat: addressData[1].lat, lng: addressData[1].lng }, // Latitude and longitude for 500 College St, Toronto ON
             travelMode: google.maps.TravelMode.DRIVING,
             provideRouteAlternatives: true,
         }).then(response => {
@@ -37,22 +39,16 @@ const Directions = () => {
         return null;
     }
 
-    console.log(selected.summary);
-    console.log(leg.start_address);
-    console.log(leg.start_location);
-    console.log(leg.distance?.text);
-    console.log(leg.duration?.text);
-    console.log(routes.map((route, index) => (
-        <li key={route.summary}>
-            {route.summary}
-        </li>
-    )))
-
     return (
-        <div className="directions">
-            <h2>{selected.summary}</h2>
-            <h2>{leg.start_address} to {leg.end_address}</h2>
-            <p></p>
+        <div>
+            {open && (
+                <InfoWindow onCloseClick={() => setOpen(false)}>
+                    <p>{selected.summary}</p>
+                    <p>{leg.start_address}</p>
+                    <p>{leg.distance?.text}</p>
+                    <p>{leg.duration?.text}</p>
+                </InfoWindow>
+            )}
         </div>
     );
 }
