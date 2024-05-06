@@ -52,7 +52,10 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public String updateLog(Long id, Log newLog) {
-        return "";
+        Log oldLog = logRepository.findById(id).get();
+        oldLog = newLog;
+        logRepository.save(oldLog);
+        return "Log update successfully";
     }
 
     @Override

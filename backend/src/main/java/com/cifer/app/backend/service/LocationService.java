@@ -1,16 +1,17 @@
 package com.cifer.app.backend.service;
 
 import com.cifer.app.backend.model.Location;
+import com.cifer.app.backend.model.Log;
 
 import java.util.Date;
 import java.util.List;
 
 public interface LocationService {
-    String createLocation(Location location); //create location when a driver is active or user order a service.
+    String createLocation(Location location, String email); //create location when a driver is active or user order a service.
 
     String updateLocationByUserEmail(String email, Location newLocation); //update driver or user's location
 
-    String deleteLocation(String status); //delete location after service complete
+    String deleteLocation(Log log, String status); //delete location after service complete
 
     Location getLocationByUserId(Long id, Date startDate, Date endDate); //get current location of login user
 
