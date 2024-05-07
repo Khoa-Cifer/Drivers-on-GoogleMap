@@ -1,6 +1,8 @@
 package com.cifer.app.backend.service;
 
+import com.cifer.app.backend.exception.DriverDoNotWorkException;
 import com.cifer.app.backend.exception.IllegalProductOrderException;
+import com.cifer.app.backend.exception.ProductDoNotExistException;
 import com.cifer.app.backend.model.Log;
 import com.cifer.app.backend.model.Product;
 import com.cifer.app.backend.model.User;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +23,7 @@ public class LogServiceImpl implements LogService {
     private final LogRepository logRepository;
     private final ProductService productService;
     private final ProductRepository productRepository;
+    private final UserRepository userRepository;
 
     @Override
     public String createLog(Log log, String productName) {
@@ -65,8 +69,13 @@ public class LogServiceImpl implements LogService {
     }
 
     @Override
-    public List<Log> getAllLogsBasedOnUser(Long userId) {
-        return null;
+    public List<Log> getAllLogsBasedOnUserDriver(String userEmail) {
+        if (userRepository.findAllByRole("ROLE_DRIVER").isEmpty()) {
+            throw new DriverDoNotWorkException("This is not a driver");
+        }
+        Optional<List<Log>> logs = Optional.ofNullable(logRepository.findAllByDriverEmail(userEmail)
+                .orElseThrow(() -> new DriverDoNotWorkException("Driver with email " + userEmail + " does not receive any product")));
+        return logs.get();
     }
 
     @Override

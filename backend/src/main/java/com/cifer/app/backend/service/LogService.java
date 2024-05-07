@@ -11,7 +11,7 @@ public interface LogService {
 
     String deleteLog(Long logId); //delete the log
 
-    List<Log> getAllLogsBasedOnUser(Long userId); //get logs based on user, user can be driver or customer
+    List<Log> getAllLogsBasedOnUserDriver(String userEmail); //get logs based on user, user can be driver or customer
 
     Log getLog(Long logId);
 

@@ -18,7 +18,6 @@ import java.util.List;
 public class LogController {
     private final LogService logService;
     private final UserService userService;
-    private final ProductService productService;
 
     @PostMapping("/create-log")
     public ResponseEntity<String> createNewLog(@RequestParam("deliveredQuantity") int deliveredQuantity,
@@ -37,5 +36,11 @@ public class LogController {
     public ResponseEntity<List<Log>> getAllLogs() {
         List<Log> logList = logService.getAllLogs();
         return ResponseEntity.ok(logList);
+    }
+
+    @GetMapping("/logs/{email}")
+    public ResponseEntity<List<Log>> getLogsBasedOnDriverEmail(@PathVariable("email") String driverEmail) {
+        List<Log> driverLogList = logService.getAllLogsBasedOnUserDriver(driverEmail);
+        return ResponseEntity.ok(driverLogList);
     }
 }

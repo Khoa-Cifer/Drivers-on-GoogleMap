@@ -10,15 +10,13 @@ import { Table } from "react-bootstrap";
 
 const DeliveryList = () => {
     const [logsInfo, setLogsInfo] = useState([]);
-    const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState("")
 
     useEffect(() => {
         setTimeout(() => {
             getAllLogs().then((data) => {
                 setLogsInfo(data);
             }).catch((error) => {
-                setError(error.message);
+                console.log(error.message);
             });
         }, 1000);
     }, [])
@@ -87,11 +85,9 @@ const DeliveryList = () => {
                             <tbody className="text-center">
                                 {logsInfo.map((log) => (
                                     <tr key={log.id}>
-                                        <td className="py-4">{`${log.driver.firstName} 
-                                                                ${log.driver.lastName}`}</td>
+                                        <td className="py-4">{`${log.driver.firstName} ${log.driver.lastName}`}</td>
                                         <td className="py-4"></td>
                                         <td className="py-4"></td>
-
                                     </tr>
                                 ))}
                             </tbody>

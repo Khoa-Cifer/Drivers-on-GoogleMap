@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByEmail(String email);
 
-    @Query("SELECT u FROM User u JOIN u.role r WHERE r.name = :role")
+    @Query("SELECT u FROM User u JOIN Role r ON u.role.id = r.id WHERE r.name = :role")
     List<User> findAllByRole(String role);
 
     Optional<User> findByEmail(String email);
