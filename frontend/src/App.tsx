@@ -3,6 +3,7 @@ import Dashboard from "./components/page/Dashboard";
 import Taskbar from './components/layout/Taskbar';
 import DeliveryList from './components/page/DeliveryList';
 import OnFleetDrivers from './components/page/OnFleetDrivers';
+import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
 

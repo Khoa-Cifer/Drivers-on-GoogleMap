@@ -1,6 +1,5 @@
 import { InfoWindow, useMap, useMapsLibrary } from "@vis.gl/react-google-maps";
 import { useEffect, useState } from "react";
-import addressData from "../../data/addressData.json"
 
 const Directions = ({ origin, destination }) => {
     const map = useMap();

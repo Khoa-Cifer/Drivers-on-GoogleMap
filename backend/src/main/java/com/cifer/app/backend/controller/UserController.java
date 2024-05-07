@@ -22,8 +22,8 @@ public class UserController {
     }
 
     @GetMapping("/users/{role}")
-    public ResponseEntity<List<User>> allUsersFilteredByRole(@PathVariable("role") String name) {
-        List<User> usersFilteredByRole = userService.getAllUsersByRole(name);
+    public ResponseEntity<List<String>> allUsersFilteredByRole(@PathVariable("role") String name) {
+        List<String> usersFilteredByRole = userService.getAllUserEmailsByRole(name);
         return ResponseEntity.ok(usersFilteredByRole);
     }
 }

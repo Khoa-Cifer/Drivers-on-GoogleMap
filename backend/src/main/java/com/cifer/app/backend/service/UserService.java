@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserService {
     public List<User> getAllUsers(); //get all current users
 
-    public List<User> getAllUsersByRole(String role); //filter all users by their role
+    public List<String> getAllUserEmailsByRole(String role); //filter all users by their role
 
     User register(RegistrationRequest registrationRequest);
 
