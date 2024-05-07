@@ -39,19 +39,13 @@ const GoogleMap = () => {
         }, 1000);
     }, [])
 
-    useEffect(() => {
-        logsInfo.map((log) => {
-            setOrigin(log.order.location);
-            setDestination(log.driver.location);
-        });
-
-    }, [logsInfo]);
-
     return (
         <APIProvider apiKey={GoogleAPIKey.REACT_APP_GOOGLE_MAPS_API_KEY}>
             <div style={{ height: "70vh", width: "100%" }}>
                 <Map mapId={GoogleAPIKey.REACT_APP_GOOGLE_MAPS_ID}>
-                    <Directions origin={origin} destination={destination} />
+                    {logsInfo.map((log) => (
+                        <Directions origin={log.order.location} destination={log.driver.location} />
+                    ))}
                 </Map>
             </div>
         </APIProvider>
