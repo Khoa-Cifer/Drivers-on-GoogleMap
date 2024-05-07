@@ -26,8 +26,8 @@ const Directions = ({ origin, destination }) => {
             return;
         }
         directionsService.route({
-            origin: { lat: addressData[0].lat, lng: addressData[0].lng }, // Latitude and longitude for 100 Front St, Toronto ON
-            destination: { lat: addressData[1].lat, lng: addressData[1].lng }, // Latitude and longitude for 500 College St, Toronto ON
+            origin: { lat: origin.latitude, lng:  origin.longitude }, // Latitude and longitude for 100 Front St, Toronto ON
+            destination: { lat: destination.latitude, lng: destination.longitude }, // Latitude and longitude for 500 College St, Toronto ON
             travelMode: google.maps.TravelMode.DRIVING,
             provideRouteAlternatives: true,
         }).then(response => {
@@ -35,6 +35,7 @@ const Directions = ({ origin, destination }) => {
             setRoutes(response.routes);
         })
     }, [directionsService, directionsRenderer]);
+    
     if (!leg) {
         return null;
     }

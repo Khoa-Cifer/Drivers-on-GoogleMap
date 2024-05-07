@@ -7,7 +7,7 @@ import java.util.List;
 public interface LogService {
     String createLog(Log log, String productName); //create the log when customer order pharmacy
 
-    String updateLog(Long id, Log newLog); //update the log when there's some event
+    String updateLog(Long id, String status, boolean isFailed); //update the log when there's some event
 
     String deleteLog(Long logId); //delete the log
 

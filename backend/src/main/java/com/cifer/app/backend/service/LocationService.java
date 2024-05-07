@@ -2,12 +2,13 @@ package com.cifer.app.backend.service;
 
 import com.cifer.app.backend.model.Location;
 import com.cifer.app.backend.model.Log;
+import com.cifer.app.backend.request.LocationRequest;
 
 import java.util.Date;
 import java.util.List;
 
 public interface LocationService {
-    String createLocation(Location location, String email); //create location when a driver is active or user order a service.
+    String createLocation(LocationRequest locationRequest, String email); //create location when a driver is active or user order a service.
 
     String updateLocationByUserEmail(String email, Location newLocation); //update driver or user's location
 

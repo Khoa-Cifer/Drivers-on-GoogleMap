@@ -6,6 +6,7 @@ import com.cifer.app.backend.model.Log;
 import com.cifer.app.backend.model.User;
 import com.cifer.app.backend.repository.LocationRepository;
 import com.cifer.app.backend.repository.UserRepository;
+import com.cifer.app.backend.request.LocationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,19 +21,25 @@ public class LocationServiceImpl implements LocationService {
     private final UserRepository userRepository;
 
     @Override
-    public String createLocation(Location location, String email) {
-        if (location.getLatitude() == locationRepository.findAllByLatitude()
-            && location.getLongitude() == locationRepository.findAllByLongitude()) {
+    public String createLocation(LocationRequest locationRequest, String email) {
+        if (locationRepository.existsByLatitude(locationRequest.getLatitude()) &&
+            locationRepository.existsByLongitude(locationRequest.getLongitude())) {
             throw new IllegalPositionException("People cannot have the same position");
         }
 
+        Location newLocation = new Location();
+        newLocation.setLatitude(locationRequest.getLatitude());
+        newLocation.setLongitude(locationRequest.getLongitude());
         Optional<User> user = userRepository.findByEmail(email);
-        user.get().setLocation(location);
+        user.get().setLocation(newLocation);
+        locationRepository.save(newLocation);
+        userRepository.save(user.get());
         return "Create location successfully";
     }
 
     @Override
     public String updateLocationByUserEmail(String email, Location newLocation) {
+
         return "";
     }
 

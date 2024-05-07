@@ -19,5 +19,6 @@ public class Location {
     private double latitude;
     private double longitude;
     @OneToOne(mappedBy = "location")
+    @JsonIgnore
     private User user;
 }

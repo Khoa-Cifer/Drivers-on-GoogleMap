@@ -1,5 +1,4 @@
 import GoogleAPIKey from "../../data/GoogleAPIKey.json";
-import addressData from "../../data/addressData.json"
 
 import {
     APIProvider,
@@ -11,7 +10,8 @@ import {
 }
     from "@vis.gl/react-google-maps"
 import Directions from "./Directions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getAllLogs } from "../config/ApiService";
 
 const GoogleMap = () => {
     const [origin, setOrigin] = useState([{
@@ -24,11 +24,34 @@ const GoogleMap = () => {
         lng: 0,
     }]);
 
+
+    const [logsInfo, setLogsInfo] = useState([]);
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState("")
+
+    useEffect(() => {
+        setTimeout(() => {
+            getAllLogs().then((data) => {
+                setLogsInfo(data);
+            }).catch((error) => {
+                setError(error.message);
+            });
+        }, 1000);
+    }, [])
+
+    useEffect(() => {
+        logsInfo.map((log) => {
+            setOrigin(log.order.location);
+            setDestination(log.driver.location);
+        });
+
+    }, [logsInfo]);
+
     return (
         <APIProvider apiKey={GoogleAPIKey.REACT_APP_GOOGLE_MAPS_API_KEY}>
             <div style={{ height: "70vh", width: "100%" }}>
                 <Map mapId={GoogleAPIKey.REACT_APP_GOOGLE_MAPS_ID}>
-                    <Directions />
+                    <Directions origin={origin} destination={destination} />
                 </Map>
             </div>
         </APIProvider>
