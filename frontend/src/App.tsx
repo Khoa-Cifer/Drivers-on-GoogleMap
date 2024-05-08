@@ -4,7 +4,6 @@ import Taskbar from './components/layout/Taskbar';
 import DeliveryList from './components/page/DeliveryList';
 import OnFleetDrivers from './components/page/OnFleetDrivers';
 import 'bootstrap/dist/css/bootstrap.css';
-import { AuthProvider } from './components/auth/AuthProvider';
 import Registration from './components/auth/Registration';
 import Login from './components/auth/Login';
 import CreateLog from './components/log/CreateLog';
@@ -14,7 +13,6 @@ function App() {
 
   return (
     <div className="App bg-[#E6F9FD]">
-      <AuthProvider>
         <main className='flex'>
           <Router>
             <Taskbar />
@@ -30,7 +28,6 @@ function App() {
             </Routes>
           </Router>
         </main>
-      </AuthProvider>
 
     </div>
   );

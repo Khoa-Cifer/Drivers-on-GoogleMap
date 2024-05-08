@@ -27,7 +27,10 @@ const getUsersBasedOnRole = async (role) => {
 }
 
 const loginUser = async (login) => {
-    const response = await api.post("api/auth/login", login);
+    const formData = new FormData();
+    formData.append("email", login.email);
+    formData.append("password", login.password);
+    const response = await api.post("api/auth/login", formData);
     return response;
 }
 

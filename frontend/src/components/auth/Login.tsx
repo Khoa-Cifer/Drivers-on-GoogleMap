@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { loginUser } from "../config/ApiService"
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import { useAuth } from "./AuthProvider"
 
 const Login = () => {
     const [errorMessage, setErrorMessage] = useState("")
@@ -11,7 +10,6 @@ const Login = () => {
     })
 
     const navigate = useNavigate()
-    const auth = useAuth()
     const location = useLocation()
     const redirectUrl = location.state?.path || "/"
 
@@ -27,8 +25,6 @@ const Login = () => {
         const success = await loginUser(login);
         console.log(success)
         if (success) {
-            const token = success.token;
-            auth.handleLogin(token)
             navigate(redirectUrl, { replace: true })
         } else {
             setErrorMessage("Invalid username or password.")

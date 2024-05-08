@@ -1,6 +1,5 @@
 package com.cifer.app.backend.service;
 
-import com.cifer.app.backend.exception.RoleNotFoundException;
 import com.cifer.app.backend.exception.UserAlreadyExistException;
 import com.cifer.app.backend.exception.UserNotFoundException;
 import com.cifer.app.backend.model.Role;
@@ -9,10 +8,8 @@ import com.cifer.app.backend.repository.RoleRepository;
 import com.cifer.app.backend.repository.UserRepository;
 import com.cifer.app.backend.request.RegistrationRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +18,6 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getAllUsers() {
@@ -43,10 +39,19 @@ public class UserServiceImpl implements UserService {
         user.setLastName(registrationRequest.getLastName());
         user.setEmail(registrationRequest.getEmail());
         String password = registrationRequest.getPassword();
-        user.setPassword(passwordEncoder.encode(password));
+        user.setPassword(password);
         Role userRole = roleRepository.findByName(registrationRequest.getRole()).get();
         user.setRole(userRole);
         return userRepository.save(user);
+    }
+
+    @Override
+    public User login(String email, String password) {
+        User user = userRepository.login(email, password).get();
+        if (user != null) {
+            return user;
+        }
+        throw new UserNotFoundException("Cannot find this user");
     }
 
     @Override

@@ -19,4 +19,6 @@ public interface UserService {
     String deleteUserByEmail(String email);
 
     String getUserRoleByEmail(String email);
+
+    User login(String email, String password);
 }
