@@ -26,7 +26,6 @@ import java.util.List;
 @CrossOrigin("*")
 public class AuthController {
     private final UserService userService;
-
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
 
@@ -46,21 +45,19 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestParam("email") String email,
-                                              @Valid @RequestParam("password") String password) {
-        LoginRequest request = new LoginRequest(email, password);
+    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest request) {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtTokenForUser(authentication);
         AppUserDetails userDetails = (AppUserDetails) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities()
+        String role = String.valueOf(userDetails.getAuthorities()
                 .stream()
-                .map(GrantedAuthority::getAuthority).toList();
+                .map(GrantedAuthority::getAuthority).toList());
         return ResponseEntity.ok(new JwtResponse(
                 userDetails.getId(),
                 userDetails.getEmail(),
                 jwt,
-                roles));
+                role));
     }
 }

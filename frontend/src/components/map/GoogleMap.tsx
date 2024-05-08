@@ -14,19 +14,11 @@ const GoogleMap = ({ userEmail }) => {
 
     useEffect(() => {
         setTimeout(() => {
-            if (userEmail !== null) {
-                getLogsBasedOnDriver(userEmail).then((data) => {
-                    setLogsInfo(data);
-                }).catch((error) => {
-                    console.log(error.message);
-                });
-            } else {
-                getAllLogs().then((data) => {
-                    setLogsInfo(data);
-                }).catch((error) => {
-                    console.log(error.message);
-                });
-            }
+            getAllLogs().then((data) => {
+                setLogsInfo(data);
+            }).catch((error) => {
+                console.log(error.message);
+            });
         }, 1000);
     }, [userEmail])
 

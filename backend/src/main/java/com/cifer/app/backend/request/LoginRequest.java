@@ -7,9 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Data
-@Getter
-@Setter
-@AllArgsConstructor
 public class LoginRequest {
     @NotBlank
     private String email;

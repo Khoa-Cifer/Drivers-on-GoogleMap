@@ -2,6 +2,7 @@ package com.cifer.app.backend.service;
 
 import com.cifer.app.backend.exception.DriverDoNotWorkException;
 import com.cifer.app.backend.exception.IllegalProductOrderException;
+import com.cifer.app.backend.exception.LogDoNotExistException;
 import com.cifer.app.backend.exception.ProductDoNotExistException;
 import com.cifer.app.backend.model.Log;
 import com.cifer.app.backend.model.Product;
@@ -65,7 +66,11 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public String deleteLog(Long logId) {
-        return "";
+        if (!logRepository.existsById(logId)) {
+            throw new LogDoNotExistException("Log do not exist");
+        }
+        logRepository.deleteById(logId);
+        return "Delete successfully";
     }
 
     @Override
@@ -76,11 +81,6 @@ public class LogServiceImpl implements LogService {
         Optional<List<Log>> logs = Optional.ofNullable(logRepository.findAllByDriverEmail(userEmail)
                 .orElseThrow(() -> new DriverDoNotWorkException("Driver with email " + userEmail + " does not receive any product")));
         return logs.get();
-    }
-
-    @Override
-    public Log getLog(Long logId) {
-        return null;
     }
 
     @Override

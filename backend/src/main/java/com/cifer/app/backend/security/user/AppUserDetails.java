@@ -1,5 +1,6 @@
 package com.cifer.app.backend.security.user;
 
+import com.cifer.app.backend.exception.SecurityErrorException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,17 +28,20 @@ public class AppUserDetails implements UserDetails {
     private Collection<GrantedAuthority> authorities;
 
     public static AppUserDetails buildUserDetails(User user) {
-        List<Role> roles = new ArrayList<>();
-        roles.add(user.getRole());
-        List<GrantedAuthority> authorities = roles
-                .stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
-                .collect(Collectors.toList());
-        return new AppUserDetails(
-                user.getId(),
-                user.getEmail(),
-                user.getPassword(),
-                authorities);
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        Role role = user.getRole();
+        if (role != null) {
+            GrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
+            authorities.add(authority);
+        }
+        if (!authorities.isEmpty()) {
+            return new AppUserDetails(
+                    user.getId(),
+                    user.getEmail(),
+                    user.getPassword(),
+                    authorities);
+        }
+        throw new SecurityErrorException("The configuration have some bug");
     }
 
     @Override

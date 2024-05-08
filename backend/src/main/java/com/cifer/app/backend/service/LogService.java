@@ -13,7 +13,5 @@ public interface LogService {
 
     List<Log> getAllLogsBasedOnUserDriver(String userEmail); //get logs based on user, user can be driver or customer
 
-    Log getLog(Long logId);
-
     List<Log> getAllLogs(); //administrator's command
 }

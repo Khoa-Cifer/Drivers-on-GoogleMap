@@ -36,8 +36,7 @@ const FeaturesList = () => {
                     <ModulesList image={<CiMail />} name={"Invoices"} hidden={false} />
                     <ModulesList image={<FaRegBuilding />} name={"Companies"} hidden={false} />
                     <Link to={"/delivery-logs"}>
-                    <ModulesList image={<TbWallpaper />} name={"Transaction Logs"} hidden={false} />
-
+                        <ModulesList image={<TbWallpaper />} name={"Transaction Logs"} hidden={false} />
                     </Link>
                     <ModulesList image={<LuUserSquare2 />} name={"User Profiles"} hidden={false} />
                     <ModulesList image={<FaList />} name={"C.M.S"} hidden={false} />
@@ -48,6 +47,12 @@ const FeaturesList = () => {
                     <ModulesList image={<PiQuotes />} name={"Testimonials"} hidden={false} />
                     <ModulesList image={<IoLayersOutline />} name={"Sliders"} hidden={false} />
                     <ModulesList image={<CiHospital1 />} name={"Pharmacy"} hidden={false} />
+                    <Link to={"/register-driver"}>
+                        <ModulesList image={<LuUserSquare2 />} name={"Register as Driver"} hidden={true} />
+                    </Link>
+                    <Link to={"/register-customer"}>
+                        <ModulesList image={<LuUserSquare2 />} name={"Register as Customer"} hidden={true} />
+                    </Link>
                 </div>
             </div>
         </div>
