@@ -15,6 +15,7 @@ import com.cifer.app.backend.model.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
@@ -28,20 +29,15 @@ public class AppUserDetails implements UserDetails {
     private Collection<GrantedAuthority> authorities;
 
     public static AppUserDetails buildUserDetails(User user) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        Role role = user.getRole();
-        if (role != null) {
-            GrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
-            authorities.add(authority);
-        }
-        if (!authorities.isEmpty()) {
-            return new AppUserDetails(
+        List<GrantedAuthority> authorities = user.getRoles()
+                .stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName())
+                ).collect(Collectors.toList());
+        return new AppUserDetails(
                     user.getId(),
                     user.getEmail(),
                     user.getPassword(),
                     authorities);
-        }
-        throw new SecurityErrorException("The configuration have some bug");
     }
 
     @Override

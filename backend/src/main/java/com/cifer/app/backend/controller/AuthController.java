@@ -10,6 +10,7 @@ import com.cifer.app.backend.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,20 +45,22 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest request) {
+    @PostMapping(value = "/login", consumes = MediaType.ALL_VALUE)
+    public ResponseEntity<JwtResponse> authenticateUser(@RequestParam("email") String email,
+                                                        @RequestParam("password") String password) {
+        LoginRequest request = new LoginRequest(email, password);
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtTokenForUser(authentication);
         AppUserDetails userDetails = (AppUserDetails) authentication.getPrincipal();
-        String role = String.valueOf(userDetails.getAuthorities()
+        List<String> roles = userDetails.getAuthorities()
                 .stream()
-                .map(GrantedAuthority::getAuthority).toList());
+                .map(GrantedAuthority::getAuthority).toList();
         return ResponseEntity.ok(new JwtResponse(
                 userDetails.getId(),
                 userDetails.getEmail(),
                 jwt,
-                role));
+                roles));
     }
 }

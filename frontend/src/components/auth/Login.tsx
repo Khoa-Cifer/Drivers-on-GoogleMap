@@ -24,9 +24,10 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const success = await loginUser(login)
+        const success = await loginUser(login);
+        console.log(success)
         if (success) {
-            const token = success.token
+            const token = success.token;
             auth.handleLogin(token)
             navigate(redirectUrl, { replace: true })
         } else {

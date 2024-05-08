@@ -1,9 +1,5 @@
 import api from "./CustomizeApiFunction"
 
-const getToken = () => {
-	return sessionStorage.getItem('token');
-};
-
 const registerUser = async (registraion) => {
     const formData = new FormData();
     formData.append("firstName", registraion.firstName);
@@ -30,11 +26,16 @@ const getUsersBasedOnRole = async (role) => {
     return response;
 }
 
-const loginUser = async (email, password) => {
+const loginUser = async (login) => {
+    const response = await api.post("api/auth/login", login);
+    return response;
+}
+
+const createProduct = async (name, quantity) => {
     const formData = new FormData();
-    formData.append("email", email);
-    formData.append("password", password);
-    const response = await api.post("api/auth/login", formData);
+    formData.append("name", name);
+    formData.append("quantity", quantity);
+    const response = await api.post("/api/product/create-product", formData)
     return response;
 }
 
@@ -43,5 +44,6 @@ export {
     loginUser,
     getAllLogs,
     getLogsBasedOnDriver,
-    getUsersBasedOnRole
+    getUsersBasedOnRole,
+    createProduct
 }

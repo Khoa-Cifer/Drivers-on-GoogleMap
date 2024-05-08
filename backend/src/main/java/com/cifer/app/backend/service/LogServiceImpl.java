@@ -6,9 +6,11 @@ import com.cifer.app.backend.exception.LogDoNotExistException;
 import com.cifer.app.backend.exception.ProductDoNotExistException;
 import com.cifer.app.backend.model.Log;
 import com.cifer.app.backend.model.Product;
+import com.cifer.app.backend.model.Role;
 import com.cifer.app.backend.model.User;
 import com.cifer.app.backend.repository.LogRepository;
 import com.cifer.app.backend.repository.ProductRepository;
+import com.cifer.app.backend.repository.RoleRepository;
 import com.cifer.app.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ public class LogServiceImpl implements LogService {
     private final ProductService productService;
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     @Override
     public String createLog(Log log, String productName) {
@@ -32,23 +35,30 @@ public class LogServiceImpl implements LogService {
         User driver = log.getDriver();
         LocalDate orderDate = LocalDate.now();
 
-        if (Objects.equals(order.getRole().getName(), "ROLE_CUSTOMER")
-            || Objects.equals(driver.getRole().getName(), "ROLE_DRIVER")) {
-            log.setStatus("pending"); //start a new request from customer, waiting for delivery
+        Optional<List<String>> rolesOptional = roleRepository.findAllName();
+        if (rolesOptional.isPresent()) {
+            List<String> roles = rolesOptional.get();
 
-            Product selectedProduct = productService.getProductByName(productName);
-            int selectedProductQuantity = selectedProduct.getQuantity();
-            int orderQuantity = log.getDeliveredQuantity();
+            boolean isCustomer = roles.contains("ROLE_CUSTOMER");
+            boolean isDriver = roles.contains("ROLE_DRIVER");
 
-            if (orderQuantity > selectedProductQuantity) {
-                throw new IllegalProductOrderException("We do not have enough !!");
+            if ((isCustomer && order.getRoles().contains("ROLE_CUSTOMER")) || (isDriver && driver.getRoles().contains("ROLE_DRIVER"))) {
+                log.setStatus("pending"); //start a new request from customer, waiting for delivery
+
+                Product selectedProduct = productService.getProductByName(productName);
+                int selectedProductQuantity = selectedProduct.getQuantity();
+                int orderQuantity = log.getDeliveredQuantity();
+
+                if (orderQuantity > selectedProductQuantity) {
+                    throw new IllegalProductOrderException("We do not have enough !!");
+                }
+
+                log.setOrderDate(orderDate);
+                log.setProduct(selectedProduct);
+                selectedProduct.setQuantity(selectedProductQuantity - orderQuantity);
+
+                productRepository.save(selectedProduct);
             }
-
-            log.setOrderDate(orderDate);
-            log.setProduct(selectedProduct);
-            selectedProduct.setQuantity(selectedProductQuantity - orderQuantity);
-
-            productRepository.save(selectedProduct);
         }
 
         logRepository.save(log);
