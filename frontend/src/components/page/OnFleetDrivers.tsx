@@ -7,24 +7,8 @@ import userImage from "../../assets/user.png"
 import { GoDotFill } from "react-icons/go";
 import MapMarker from "../common/MapMarker";
 import { FaMapMarker } from "react-icons/fa";
-import { useEffect, useState } from "react";
-import { getUsersBasedOnRole } from "../config/ApiService";
 
 const OnFleetDrivers = () => {
-    const [userEmails, setUserEmails] = useState([""])
-    const [userEmail, setUserEmail] = useState("")
-    const ROLE = "ROLE_DRIVER"
-
-    useEffect(() => {
-        getUsersBasedOnRole(ROLE).then((data) => {
-            setUserEmails(data)
-        })
-    }, [])
-
-    const handleEmailChange = (e) => {
-        setUserEmail(e.target.value)
-    }
-
     return (
         <div className="flex">
             <div className="w-[75vw] m-[50px] rounded-3xl bg-white">
@@ -47,16 +31,8 @@ const OnFleetDrivers = () => {
                             required
                             className="form-select"
                             name="roomType"
-                            onChange={(e) => {
-                                handleEmailChange(e)
-                            }}
                         >
                             <option value="">Drivers</option>
-                            {userEmails.map((email) => (
-                                <option value={email}>
-                                    {email}
-                                </option>
-                            ))}
                         </select>
                         
                         <button className="flex justify-between items-center w-[170px] rounded-2xl p-[16px] border">
@@ -65,7 +41,7 @@ const OnFleetDrivers = () => {
                         </button>
                     </div>
                     <div className="py-8">
-                        <GoogleMap userEmail={userEmail}/>
+                        <GoogleMap/>
                     </div>
                     <div>
                         <p className="font-medium text-xs mb-3">Status</p>

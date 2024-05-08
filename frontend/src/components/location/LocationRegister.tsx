@@ -1,50 +1,22 @@
 import { useEffect, useState } from "react";
 import { createLocation } from "../config/ApiService";
 
-const LocationRegister = () => {
-    const [address, setAddress] = useState({
-        latitude: null,
-        longitude: null,
-    });
-
+const LocationRegister = ({ latitude, longitude }) => {
     const [email, setEmail] = useState("");
-    const [role, setRole] = useState("");
 
     const [successMessage, setSuccessMessage] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
 
-    const handleAddressChange = (e) => {
-        const name = e.target.name;
-        let value = e.target.value;
-
-        if (!isNaN(value)) {
-            value = parseFloat(value);
-        } else {
-            value = "";
-        }
-
-        setAddress({ ...address, [name]: value })
-    }
-
-    const handleEmail = (e) => {
-        setEmail(e.target.value);
-    }
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const success = await createLocation(email, address.latitude, address.longitude)
+            const success = await createLocation(email, latitude, longitude)
             if (success !== undefined) {
                 setSuccessMessage("A new location was assigned successfully !")
-                setAddress({
-                    latitude: null,
-                    longitude: null,
-                });
                 setErrorMessage("")
             } else {
                 setErrorMessage("Error adding new room")
             }
-            setRole("");
 
         } catch (error) {
             setErrorMessage(error.data)
@@ -55,6 +27,9 @@ const LocationRegister = () => {
         }, 3000)
     }
 
+    const handleEmail = (e) => {
+        setEmail(e.target.value);
+    }
 
     return (
         <div>
@@ -91,8 +66,7 @@ const LocationRegister = () => {
                             className="form-control"
                             id="latitude"
                             name="latitude"
-                            value={address.latitude}
-                            onChange={handleAddressChange}
+                            value={latitude}
                         />
                     </div>
                     <div className="mb-3">
@@ -105,8 +79,7 @@ const LocationRegister = () => {
                             className="form-control"
                             id="longitude"
                             name="longitude"
-                            value={address.longitude}
-                            onChange={handleAddressChange}
+                            value={longitude}
                         />
                     </div>
                     <div className="d-grid gap-2 d-md-flex mt-2">
