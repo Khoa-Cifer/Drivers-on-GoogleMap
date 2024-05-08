@@ -48,11 +48,6 @@ const createLocation = async (email, latitude, longitude) => {
     return response;
 }
 
-const getRoleByEmail = async(email) => {
-    const response = await api.get(`api/user//users/role/${email}`);
-    return response;
-}
-
 export {
     registerUser,
     loginUser,
@@ -61,5 +56,4 @@ export {
     getUsersBasedOnRole,
     createProduct,
     createLocation,
-    getRoleByEmail,
 }

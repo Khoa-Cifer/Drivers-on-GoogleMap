@@ -85,7 +85,7 @@ const CreateProduct = () => {
                     </div>
                     <div className="d-grid gap-2 d-md-flex mt-2">
                         <button type="submit" className="btn btn-outline-primary ml-5">
-                            Save Room
+                            Save
                         </button>
                     </div>
                 </form>

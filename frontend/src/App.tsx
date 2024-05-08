@@ -29,8 +29,6 @@ function App() {
               <Route path='/create-log' element={<CreateLog />}></Route>
               <Route path='/create-product' element={<CreateProduct />}></Route>
               <Route path='/location-input' element={<LocationRegister />}></Route>
-              <Route path='/login' element={<Login />}></Route>
-              <Route path='/login' element={<Login />}></Route>
             </Routes>
           </Router>
         </main>
