@@ -10,6 +10,7 @@ import com.cifer.app.backend.request.RegistrationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<String> getAllUserEmailsByRole(String role) {
+    public List<User> getAllUsersByRole(String role) {
         return userRepository.findAllByRole(role);
     }
 
@@ -61,12 +62,6 @@ public class UserServiceImpl implements UserService {
         }
         User user = userRepository.findByEmail(email).get();
         return user;
-    }
-
-    @Override
-    public String getUserRoleByEmail(String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        return user.get().getRole().getName();
     }
 
     @Override

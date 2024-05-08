@@ -21,11 +21,6 @@ const getLogsBasedOnDriver = async (email) => {
     return response;
 }
 
-const getUsersBasedOnRole = async (role) => {
-    const response = await api.get(`api/user/users/${role}`)
-    return response;
-}
-
 const loginUser = async (login) => {
     const formData = new FormData();
     formData.append("email", login.email);
@@ -51,12 +46,28 @@ const createLocation = async (email, latitude, longitude) => {
     return response;
 }
 
+const createLog = async (logHistory) => {
+    const formData = new FormData();
+    formData.append("deliveredQuantity", logHistory.deliveredQuantity);
+    formData.append("customerEmail", logHistory.customerEmail);
+    formData.append("driverEmail", logHistory.driverEmail);
+    formData.append("productName", logHistory.productName);
+    const response = await api.post("/api/log/create-log", formData);
+    return response;
+}
+
+const getUsersBasedOnRole = async (role) => {
+    const response = await api.get(`/api/user/users/${role}`);
+    return response;
+}
+
 export {
     registerUser,
     loginUser,
     getAllLogs,
     getLogsBasedOnDriver,
-    getUsersBasedOnRole,
     createProduct,
     createLocation,
+    createLog,
+    getUsersBasedOnRole,
 }

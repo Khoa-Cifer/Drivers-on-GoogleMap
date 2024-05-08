@@ -29,7 +29,6 @@ const CreateProduct = () => {
             const success = await createProduct(newProduct.name, newProduct.quantity)
             if (success !== undefined) {
                 setSuccessMessage("A new room was added successfully !")
-                console.log(newProduct)
                 setNewProduct({ name: null, quantity: null })
                 setErrorMessage("")
             } else {

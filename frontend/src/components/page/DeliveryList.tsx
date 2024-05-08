@@ -65,17 +65,14 @@ const DeliveryList = () => {
                                 {logsInfo.map((log) => (
                                     <tr key={log.id}>
                                         <td className="py-4 text-start pl-3">{log.product.name}</td>
-                                        <td className="py-4">{`${log.product.createdDate[0]}-
-                                                                ${log.product.createdDate[1]}-
-                                                                ${log.product.createdDate[2]}`}
-                                        </td>
-                                        <td className="py-4"></td>
+                                        <td className="py-4">{`${log.product.createdDate}`}
+                                        </td><td className="py-4"></td>
                                     </tr>
                                 ))}
                             </tbody>
                         </Table>
                         <Table className="table w-2/3 bg-[#E6E6E6]">
-                            <thead>
+                            <thead className="text-center">
                                 <th className="py-4 text-[#01428E]">Drives</th>
                                 <th className="py-4 text-[#01428E]">Elapsed Time (hrs)</th>
                                 <th className="py-4 text-[#01428E]">Drops</th>
@@ -86,6 +83,8 @@ const DeliveryList = () => {
                                 {logsInfo.map((log) => (
                                     <tr key={log.id}>
                                         <td className="py-4">{`${log.driver.firstName} ${log.driver.lastName}`}</td>
+                                        <td className="py-4"></td>
+                                        <td className="py-4"></td>
                                         <td className="py-4"></td>
                                         <td className="py-4"></td>
                                     </tr>

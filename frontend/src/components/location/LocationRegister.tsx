@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createLocation } from "../config/ApiService";
 
 const LocationRegister = ({ latitude, longitude }) => {

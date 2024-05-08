@@ -7,10 +7,10 @@ import {
     from "@vis.gl/react-google-maps"
 import Directions from "./Directions";
 import { useEffect, useState } from "react";
-import { getAllLogs } from "../config/ApiService";
+import { getAllLogs, getLogsBasedOnDriver } from "../config/ApiService";
 import LocationRegister from "../location/LocationRegister";
 
-const GoogleMap = ({ }) => {
+const GoogleMap = ({ driverEmail }) => {
     const [logsInfo, setLogsInfo] = useState([]);
     const [latitude, setLatitude] = useState(0);
     const [longitude, setLongitude] = useState(0);
@@ -21,20 +21,27 @@ const GoogleMap = ({ }) => {
     }
 
     const handleClick = (e) => {
-        console.log(e.detail.latLng.lat);
-        console.log(e.detail.latLng.lng);
         setLatitude(e.detail.latLng.lat);
         setLongitude(e.detail.latLng.lng);
     }
 
     useEffect(() => {
-        setTimeout(() => {
+        setTimeout(async () => {
             getAllLogs().then((data) => {
                 setLogsInfo(data);
             }).catch((error) => {
                 console.log(error.message);
             });
+
         }, 1000);
+    }, [])
+
+    useEffect(() => {
+        if(driverEmail !== null) {
+            getLogsBasedOnDriver(driverEmail).then((data) => {
+                setLogsInfo(data)
+            })
+        }
     }, [])
 
     return (
