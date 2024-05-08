@@ -23,33 +23,7 @@ public class Role {
     private Long id;
     private String name;
 
+    @OneToMany(mappedBy = "role")
     @JsonIgnore
-    @ManyToMany(mappedBy = "roles")
-    private Collection<User> users = new HashSet<>();
-
-    public Role(String name) {
-        this.name = name;
-    }
-
-    public void assignRoleToUser(User user) {
-        user.getRoles().add(this);
-        this.getUsers().add(user);
-    }
-
-    public void removeUserFromRole(User user) {
-        user.getRoles().remove(this);
-        this.getUsers().remove(user);
-
-    }
-
-    public void removeAllUsersFromRole() {
-        if (this.getUsers() != null) {
-            List<User> roleUsers = this.getUsers().stream().toList();
-            roleUsers.forEach(this::removeUserFromRole);
-        }
-    }
-
-    public String getName() {
-        return name != null ? name : "";
-    }
+    private Set<User> users;
 }

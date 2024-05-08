@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
         String password = registrationRequest.getPassword();
         user.setPassword(passwordEncoder.encode(password));
         Role userRole = roleRepository.findByName(registrationRequest.getRole()).get();
-        user.setRoles(Collections.singletonList(userRole));
+        user.setRole(userRole);
         return userRepository.save(user);
     }
 
@@ -56,6 +56,12 @@ public class UserServiceImpl implements UserService {
         }
         User user = userRepository.findByEmail(email).get();
         return user;
+    }
+
+    @Override
+    public String getUserRoleByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return user.get().getRole().getName();
     }
 
     @Override

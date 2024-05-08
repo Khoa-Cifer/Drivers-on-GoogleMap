@@ -17,4 +17,6 @@ public interface UserService {
     String updateUserByEmail(String email, User newUser);
 
     String deleteUserByEmail(String email);
+
+    String getUserRoleByEmail(String email);
 }

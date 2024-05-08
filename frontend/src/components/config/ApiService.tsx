@@ -39,11 +39,27 @@ const createProduct = async (name, quantity) => {
     return response;
 }
 
+const createLocation = async (email, latitude, longitude) => {
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("latitude", latitude);
+    formData.append("longitude", longitude);
+    const response = await api.post("/api/location/create-location", formData);
+    return response;
+}
+
+const getRoleByEmail = async(email) => {
+    const response = await api.get(`api/user//users/role/${email}`);
+    return response;
+}
+
 export {
     registerUser,
     loginUser,
     getAllLogs,
     getLogsBasedOnDriver,
     getUsersBasedOnRole,
-    createProduct
+    createProduct,
+    createLocation,
+    getRoleByEmail,
 }

@@ -27,7 +27,6 @@ public class LogServiceImpl implements LogService {
     private final ProductService productService;
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
 
     @Override
     public String createLog(Log log, String productName) {
@@ -35,30 +34,23 @@ public class LogServiceImpl implements LogService {
         User driver = log.getDriver();
         LocalDate orderDate = LocalDate.now();
 
-        Optional<List<String>> rolesOptional = roleRepository.findAllName();
-        if (rolesOptional.isPresent()) {
-            List<String> roles = rolesOptional.get();
+        if (Objects.equals(order.getRole().getName(), "ROLE_CUSTOMER")
+                || Objects.equals(driver.getRole().getName(), "ROLE_DRIVER")) {
+            log.setStatus("pending"); //start a new request from customer, waiting for delivery
 
-            boolean isCustomer = roles.contains("ROLE_CUSTOMER");
-            boolean isDriver = roles.contains("ROLE_DRIVER");
+            Product selectedProduct = productService.getProductByName(productName);
+            int selectedProductQuantity = selectedProduct.getQuantity();
+            int orderQuantity = log.getDeliveredQuantity();
 
-            if ((isCustomer && order.getRoles().contains("ROLE_CUSTOMER")) || (isDriver && driver.getRoles().contains("ROLE_DRIVER"))) {
-                log.setStatus("pending"); //start a new request from customer, waiting for delivery
-
-                Product selectedProduct = productService.getProductByName(productName);
-                int selectedProductQuantity = selectedProduct.getQuantity();
-                int orderQuantity = log.getDeliveredQuantity();
-
-                if (orderQuantity > selectedProductQuantity) {
-                    throw new IllegalProductOrderException("We do not have enough !!");
-                }
-
-                log.setOrderDate(orderDate);
-                log.setProduct(selectedProduct);
-                selectedProduct.setQuantity(selectedProductQuantity - orderQuantity);
-
-                productRepository.save(selectedProduct);
+            if (orderQuantity > selectedProductQuantity) {
+                throw new IllegalProductOrderException("We do not have enough !!");
             }
+
+            log.setOrderDate(orderDate);
+            log.setProduct(selectedProduct);
+            selectedProduct.setQuantity(selectedProductQuantity - orderQuantity);
+
+            productRepository.save(selectedProduct);
         }
 
         logRepository.save(log);

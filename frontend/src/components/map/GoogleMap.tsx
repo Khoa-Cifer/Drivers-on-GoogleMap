@@ -7,7 +7,7 @@ import {
     from "@vis.gl/react-google-maps"
 import Directions from "./Directions";
 import { useEffect, useState } from "react";
-import { getAllLogs, getLogsBasedOnDriver } from "../config/ApiService";
+import { getAllLogs } from "../config/ApiService";
 
 const GoogleMap = ({ userEmail }) => {
     const [logsInfo, setLogsInfo] = useState([]);

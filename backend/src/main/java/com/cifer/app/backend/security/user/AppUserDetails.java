@@ -29,10 +29,12 @@ public class AppUserDetails implements UserDetails {
     private Collection<GrantedAuthority> authorities;
 
     public static AppUserDetails buildUserDetails(User user) {
-        List<GrantedAuthority> authorities = user.getRoles()
+        List<Role> roles = new ArrayList<>();
+        roles.add(user.getRole());
+        List<GrantedAuthority> authorities = roles
                 .stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName())
-                ).collect(Collectors.toList());
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
         return new AppUserDetails(
                     user.getId(),
                     user.getEmail(),
